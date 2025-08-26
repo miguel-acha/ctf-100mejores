@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <span class="pill">Reto 1 · Cifrado César</span>
+  <h1>Descifra el mensaje</h1>
+  <p class="hint">Mueve el deslizador hasta encontrar el mensaje oculto.</p>
+
+  <h2>Mensaje cifrado</h2>
+  <div class="encoded" id="cipher">{{ encoded_text }}</div>
+
+  <div class="sp"></div>
+  <label class="hint">Rotación: <span id="rotVal">0</span></label>
+  <input class="range" type="range" min="0" max="25" value="0" id="rot" />
+
+  <div class="sp"></div>
+  <h2>Tu descifrado</h2>
+  <input class="input" type="text" id="guess1" placeholder="Escribe el mensaje en texto normal…" />
+  <div class="sp"></div>
+  <div class="row">
+    <button class="btn" id="send1">Enviar</button>
+  </div>
+  <div class="sp"></div>
+  <div id="res1" class="hint"></div>
+</div>
+
+<script>
+  // El backend entrega 'encoded_text' en ROT17.
+  // Para que se vea claro cuando el slider está en 17, aplicamos ROT(26 - n).
+  // Si n = 17 => ROT(26 - 17) = ROT(9); ROT17 seguido de ROT9 = ROT26 = texto claro.
+  const cipherEl = document.getElementById('cipher');
+  const rot = document.getElementById('rot');
+  const rotVal = document.getElementById('rotVal');
+  const original = cipherEl.textContent; // ROT17
+
+  function rotN(s, n){
+    const A = 'A'.charCodeAt(0);
+    return s.replace(/[A-Z]/g, ch => String.fromCharCode((ch.charCodeAt(0)-A+n)%26 + A));
+  }
+  function updateView(){
+    const n = parseInt(rot.value, 10);
+    rotVal.textContent = n;
+    const show = rotN(original, (26 - n) % 26); // se ve claro en n = 17
+    cipherEl.textContent = show;
+  }
+  rot.addEventListener('input', updateView);
+  // Arranca en 0 (no se ve claro), el usuario debe mover a 17:
+  updateView();
+
+  document.getElementById('send1').addEventListener('click', async ()=>{
+    const guess = (document.getElementById('guess1').value || '').trim();
+    const resBox = document.getElementById('res1');
+    if(!guess){ resBox.innerHTML = '<span class="err">Escribe tu propuesta.</span>'; return; }
+    const r = await fetch('/api/check1', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({guess})
+    });
+    const j = await r.json();
+    if(j.ok){
+      resBox.innerHTML = '<span class="ok">¡Correcto!</span>';
+      setTimeout(()=>location.href='/stage2',600);
+    }else{
+      resBox.innerHTML = '<span class="err">Aún no. Ajusta la rotación (pista: 17) y vuelve a intentar.</span>';
+    }
+  });
+</script>
+{% endblock %}

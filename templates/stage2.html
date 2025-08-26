@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <span class="pill">Reto 2 · Mensaje Escondido</span>
+  <h1>Encuentra el mensaje oculto</h1>
+  <p class="hint">Usa las flechas para alternar filtros hasta ver el mensaje oculto en la imagen.</p>
+
+  <div class="imgbox">
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <!-- Navegación solo con flechas (SVG) -->
+  <div class="nav">
+    <button class="btn icon secondary" id="prev" aria-label="Vista anterior">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M15 6l-6 6 6 6"/>
+      </svg>
+    </button>
+    <button class="btn icon secondary" id="next" aria-label="Vista siguiente">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M9 18l6-6-6-6"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="sp"></div>
+  <h2>¿Cuál es el mensaje oculto? Pista: son 3 números.</h2>
+  <input class="input" type="text" id="guess2" placeholder="Escribe aquí el mensaje oculto…" />
+  <div class="sp"></div>
+  <button class="btn" id="send2">Enviar</button>
+  <div class="sp"></div>
+  <div id="res2" class="hint"></div>
+</div>
+
+<script src="/static/js/stage2.js"></script>
+<script>
+  window.SECRET_IMAGE = "/static/{{ image_name }}";
+</script>
+{% endblock %}
