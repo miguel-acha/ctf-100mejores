@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>100 Mejores — Reto 1</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+  <div class="bg-gradient"></div>
+  <header class="header">
+    <div class="logo">100<span>Mejores</span></div>
+  </header>
+  <main class="wrap">
+
+<div class="card">
+  <span class="pill">Reto 1 · Cifrado César</span>
+  <h1>Descifra el mensaje</h1>
+  <p class="hint">Mueve el deslizador hasta encontrar el mensaje oculto.</p>
+
+  <h2>Mensaje cifrado</h2>
+  <div class="encoded" id="cipher">OVRAIRAVQB N YN HCO</div>
+
+  <div class="sp"></div>
+  <label class="hint">Rotación: <span id="rotVal">0</span></label>
+  <input class="range" type="range" min="0" max="25" value="0" id="rot" />
+
+  <div class="sp"></div>
+  <h2>Tu descifrado</h2>
+  <input class="input" type="text" id="guess1" placeholder="Escribe el mensaje en texto normal…" />
+  <div class="sp"></div>
+  <div class="row">
+    <button class="btn" id="send1">Enviar</button>
+  </div>
+  <div class="sp"></div>
+  <div id="res1" class="hint"></div>
+</div>
+
+<script>
+  // Texto en ROT13 como ejemplo: "THIS IS A TEST MESSAGE"
+  // El deslizador muestra el texto aplicando ROT(26-n).
+  const cipherEl = document.getElementById('cipher');
+  const rot = document.getElementById('rot');
+  const rotVal = document.getElementById('rotVal');
+  const original = cipherEl.textContent; // ej. ROT13
+
+  function rotN(s, n){
+    const A = 'A'.charCodeAt(0);
+    const a = 'a'.charCodeAt(0);
+    return s.replace(/[A-Za-z]/g, ch => {
+      const code = ch.charCodeAt(0);
+      if(code >= A && code <= A+25) return String.fromCharCode((code - A + n) % 26 + A);
+      if(code >= a && code <= a+25) return String.fromCharCode((code - a + n) % 26 + a);
+      return ch;
+    });
+  }
+  function updateView(){
+    const n = parseInt(rot.value, 10);
+    rotVal.textContent = n;
+    const show = rotN(original, (26 - n) % 26); // se ve claro en la rotación correcta
+    cipherEl.textContent = show;
+  }
+  rot.addEventListener('input', updateView);
+  updateView();
+
+  // Ajusta aquí la respuesta esperada en texto claro
+  const EXPECTED = "BIENVENIDO A LA UPB";
+
+  document.getElementById('send1').addEventListener('click', ()=>{
+    const guess = (document.getElementById('guess1').value || '').trim().toUpperCase();
+    const resBox = document.getElementById('res1');
+    if(!guess){ resBox.innerHTML = '<span class="err">Escribe tu propuesta.</span>'; return; }
+    if(guess === EXPECTED){
+      resBox.innerHTML = '<span class="ok">¡Correcto!</span>';
+      setTimeout(()=>location.href='stage2.html',600);
+    }else{
+      resBox.innerHTML = '<span class="err">Aún no. Ajusta la rotación y vuelve a intentar.</span>';
+    }
+  });
+</script>
+  </main>
+  <footer class="footer">
+    <div>Ingeniería de Sistemas Computacionales · Ciberseguridad</div>
+  </footer>
+</body>
+</html>
