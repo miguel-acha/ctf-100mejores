@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>100 Mejores — Reto 3</title>
+  <link rel="stylesheet" href="static/css/main.css" />
+</head>
+<body>
+  <div class="bg-gradient"></div>
+  <header class="header">
+    <div class="logo">100<span>Mejores</span></div>
+  </header>
+  <main class="wrap">
+    <div class="card">
+      <span class="pill">Reto 3 · Imagen Alternativa</span>
+      <h1>Descubre el mensaje en la nueva imagen</h1>
+      <p class="hint">Usa las flechas o teclas ← → para alternar filtros hasta ver el mensaje.</p>
+
+      <div class="imgbox">
+        <canvas id="canvas" width="960" height="540" role="img" aria-label="Imagen con filtros"></canvas>
+      </div>
+
+      <div class="nav">
+        <button class="btn icon secondary" id="prev" aria-label="Filtro anterior">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <button class="btn icon secondary" id="next" aria-label="Siguiente filtro">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+
+      <div class="sp"></div>
+      <input class="input" type="text" id="guess3" placeholder="Escribe aquí el mensaje oculto…" />
+      <div class="sp"></div>
+      <button class="btn" id="send3">Enviar</button>
+      <div class="sp"></div>
+      <div id="res3" class="hint"></div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div>Ingeniería de Sistemas Computacionales · Ciberseguridad</div>
+  </footer>
+
+  <script src="static/js/stage3.js"></script>
+</body>
+</html>

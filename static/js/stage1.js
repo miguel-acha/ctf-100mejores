@@ -12,10 +12,10 @@ function rot(text, n){
   const A = 'A'.charCodeAt(0), Z = 'Z'.charCodeAt(0);
   const s = ((n % 26) + 26) % 26;
   let out = '';
-  for(const ch of text){
+  for (const ch of text){
     const c = ch.charCodeAt(0);
-    if(c>=a && c<=z) out += String.fromCharCode(((c - a + s) % 26) + a);
-    else if(c>=A && c<=Z) out += String.fromCharCode(((c - A + s) % 26) + A);
+    if (c >= a && c <= z) out += String.fromCharCode(((c - a + s) % 26) + a);
+    else if (c >= A && c <= Z) out += String.fromCharCode(((c - A + s) % 26) + A);
     else out += ch;
   }
   return out;
@@ -23,7 +23,7 @@ function rot(text, n){
 
 // Mostramos el texto transformado; en 17 queda legible
 function render(){
-  const n = parseInt(rotSlider.value, 10);
+  const n = parseInt(rotSlider.value || '0', 10);
   rotVal.textContent = n;
   const shift = (ROT_OK - n + 26) % 26;
   cipherView.textContent = rot(PLAINTEXT, shift);
@@ -32,13 +32,14 @@ function render(){
 rotSlider.addEventListener('input', render);
 
 sendBtn.addEventListener('click', ()=>{
-  const n = parseInt(rotSlider.value, 10);
-  if(n === ROT_OK){
-    resBox.innerHTML = '<span class="ok">¡Correcto! Redirigiendo al Reto 2…</span>';
-    setTimeout(()=> location.href='stage2.html', 700);
+  const n = parseInt(rotSlider.value || '0', 10);
+  if (n === ROT_OK){
+    resBox.innerHTML = '<span class="ok">¡Correcto! Redirigiendo al Reto 3…</span>';
+    setTimeout(()=> location.href = 'stage3.html', 700);
   } else {
     resBox.innerHTML = '<span class="err">Aún no. Ajusta el control hasta el ROT 17.</span>';
   }
 });
 
+// Inicializa la vista acorde al valor inicial del slider
 render();
