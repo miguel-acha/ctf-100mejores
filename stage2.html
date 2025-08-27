@@ -1,15 +1,27 @@
-{% extends 'base.html' %}
-{% block content %}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>100 Mejores — Reto 2</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+  <div class="bg-gradient"></div>
+  <header class="header">
+    <div class="logo">100<span>Mejores</span></div>
+  </header>
+  <main class="wrap">
+
 <div class="card">
   <span class="pill">Reto 2 · Mensaje Escondido</span>
   <h1>Encuentra el mensaje oculto</h1>
   <p class="hint">Usa las flechas para alternar filtros hasta ver el mensaje oculto en la imagen.</p>
 
   <div class="imgbox">
-    <canvas id="canvas"></canvas>
+    <canvas id="canvas" width="960" height="540" role="img" aria-label="Imagen con filtros"></canvas>
   </div>
 
-  <!-- Navegación solo con flechas (SVG) -->
   <div class="nav">
     <button class="btn icon secondary" id="prev" aria-label="Vista anterior">
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -30,10 +42,15 @@
   <button class="btn" id="send2">Enviar</button>
   <div class="sp"></div>
   <div id="res2" class="hint"></div>
+
+  <div class="sp"></div>
+  <!-- <div class="muted">Coloca tu imagen en <code>/images/secret.png</code> y edita <code>js/stage2.js</code> si quieres cambiar la respuesta esperada.</div> -->
 </div>
 
-<script src="/static/js/stage2.js"></script>
-<script>
-  window.SECRET_IMAGE = "/static/{{ image_name }}";
-</script>
-{% endblock %}
+<script src="js/stage2.js"></script>
+  </main>
+  <footer class="footer">
+    <div>Ingeniería de Sistemas Computacionales · Ciberseguridad</div>
+  </footer>
+</body>
+</html>
